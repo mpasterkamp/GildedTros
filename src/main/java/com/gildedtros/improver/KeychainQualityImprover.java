@@ -4,11 +4,14 @@ import com.gildedtros.Item;
 
 public class KeychainQualityImprover implements QualityImprover {
 
+    private final Item item;
+
     public KeychainQualityImprover(Item item) {
+        this.item = item;
     }
 
     @Override
-    public void updateQuality() {
-        // do nothing
+    public Item updateQuality() {
+        return item;
     }
 }

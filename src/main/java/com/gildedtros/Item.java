@@ -1,68 +1,66 @@
 package com.gildedtros;
 
-import java.util.Objects;
+public record Item(String name, int sellIn, int quality) {
 
-public class Item {
+    public static final class Builder {
 
-    private String name;
+        private String name;
+        private int sellIn;
+        private int quality;
 
-    private int sellIn;
+        public Builder() {
+        }
 
-    private int quality;
+        public Builder(Item item) {
+            this.name = item.name();
+            this.sellIn = item.sellIn();
+            this.quality = item.quality();
+        }
 
-    public Item(String name, int sellIn, int quality) {
-        this.name = name;
-        this.sellIn = sellIn;
-        this.quality = quality;
-    }
+        public String getName() {
+            return name;
+        }
 
-    static Item of(String name, int sellIn, int quality) {
-        return new Item(name, sellIn, quality);
-    }
+        public int getSellIn() {
+            return sellIn;
+        }
 
-    public String getName() {
-        return name;
-    }
+        public int getQuality() {
+            return quality;
+        }
 
-    public int getSellIn() {
-        return sellIn;
-    }
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
 
-    public void decreaseSellIn() {
-        this.sellIn--;
-    }
+        public Builder sellIn(int sellIn) {
+            this.sellIn = sellIn;
+            return this;
+        }
 
-    public int getQuality() {
-        return quality;
-    }
+        public Builder decreaseSellIn() {
+            this.sellIn--;
+            return this;
+        }
 
-    public void setQuality(int quality) {
-        this.quality = quality;
-    }
+        public Builder quality(int quality) {
+            this.quality = quality;
+            return this;
+        }
 
-    public void increaseQuality() {
-        this.quality++;
-    }
+        public Builder increaseQuality() {
+            this.quality++;
+            return this;
+        }
 
-    public void decreaseQuality() {
-        this.quality--;
-    }
+        public Builder decreaseQuality() {
+            this.quality--;
+            return this;
+        }
 
-    @Override
-    public String toString() {
-        return this.name + ", " + this.sellIn + ", " + this.quality;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return sellIn == item.sellIn && quality == item.quality && Objects.equals(name, item.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, sellIn, quality);
+        public Item build() {
+            return new Item(name, sellIn, quality);
+        }
     }
 }

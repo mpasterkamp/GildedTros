@@ -11,15 +11,19 @@ public class OtherItemsQualityImprover implements QualityImprover {
     }
 
     @Override
-    public void updateQuality() {
-        if (item.getQuality() > 0) {
-            item.decreaseQuality();
+    public Item updateQuality() {
+        Item.Builder builder = new Item.Builder(item);
+
+        if (builder.getQuality() > 0) {
+            builder.decreaseQuality();
         }
-        item.decreaseSellIn();
-        if (item.getSellIn() < 0) {
-            if (item.getQuality() > 0) {
-                item.decreaseQuality();
+        builder.decreaseSellIn();
+        if (builder.getSellIn() < 0) {
+            if (builder.getQuality() > 0) {
+                builder.decreaseQuality();
             }
         }
+
+        return builder.build();
     }
 }

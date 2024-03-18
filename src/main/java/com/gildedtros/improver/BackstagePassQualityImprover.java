@@ -13,19 +13,23 @@ public class BackstagePassQualityImprover implements QualityImprover {
     }
 
     @Override
-    public void updateQuality() {
-        if (item.getQuality() < MAXIMUM_QUALITY) {
-            item.increaseQuality();
+    public Item updateQuality() {
+        Item.Builder builder = new Item.Builder(item);
+
+        if (builder.getQuality() < MAXIMUM_QUALITY) {
+            builder.increaseQuality();
         }
-        if (item.getSellIn() < RARE_BACKSTAGE_PASS_SELL_IN_LIMIT && item.getQuality() < MAXIMUM_QUALITY) {
-            item.increaseQuality();
+        if (builder.getSellIn() < RARE_BACKSTAGE_PASS_SELL_IN_LIMIT && builder.getQuality() < MAXIMUM_QUALITY) {
+            builder.increaseQuality();
         }
-        if (item.getSellIn() < EXTRA_RARE_BACKSTAGE_PASS_SELL_IN_LIMIT && item.getQuality() < MAXIMUM_QUALITY) {
-            item.increaseQuality();
+        if (builder.getSellIn() < EXTRA_RARE_BACKSTAGE_PASS_SELL_IN_LIMIT && builder.getQuality() < MAXIMUM_QUALITY) {
+            builder.increaseQuality();
         }
-        item.decreaseSellIn();
-        if (item.getSellIn() < 0) {
-            item.setQuality(0);
+        builder.decreaseSellIn();
+        if (builder.getSellIn() < 0) {
+            builder.quality(0);
         }
+
+        return builder.build();
     }
 }

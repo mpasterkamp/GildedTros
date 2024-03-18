@@ -13,13 +13,17 @@ public class GoodWineQualityImprover implements QualityImprover {
     }
 
     @Override
-    public void updateQuality() {
-        if (item.getQuality() < MAXIMUM_QUALITY) {
-            item.increaseQuality();
+    public Item updateQuality() {
+        Item.Builder builder = new Item.Builder(item);
+
+        if (builder.getQuality() < MAXIMUM_QUALITY) {
+            builder.increaseQuality();
         }
-        item.decreaseSellIn();
-        if (item.getSellIn() < 0 && item.getQuality() < MAXIMUM_QUALITY) {
-            item.increaseQuality();
+        builder.decreaseSellIn();
+        if (builder.getSellIn() < 0 && builder.getQuality() < MAXIMUM_QUALITY) {
+            builder.increaseQuality();
         }
+
+        return builder.build();
     }
 }

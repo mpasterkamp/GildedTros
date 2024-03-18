@@ -15,9 +15,10 @@ class GildedTros {
     }
 
     public void updateQuality() {
-        Arrays.stream(items)
-                .forEach(item -> qualityImproverFactory.createQualityImprover(item.getName())
+        items = Arrays.stream(items)
+                .map(item -> qualityImproverFactory.createQualityImprover(item.name())
                         .apply(item)
-                        .updateQuality());
+                        .updateQuality())
+                .toArray(Item[]::new);
     }
 }
