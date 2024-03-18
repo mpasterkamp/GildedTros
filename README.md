@@ -13,3 +13,10 @@ The simplest way is to just clone the code and start hacking away improving the 
 Instructions can be found in the GildedTrosRequirements document.
 
 Have fun and good luck!
+
+## Remarks about the solution
+
+Although extensive the tests are not ordered well.
+I first started charting out the behaviour and creating tests for those behaviours.
+Then while refactoring the code I should have also refactored the test cases.
+This is something I did not do and since I am already over the estimated time by an hour I decided to skip that part.
