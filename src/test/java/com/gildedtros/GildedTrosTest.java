@@ -60,6 +60,16 @@ class GildedTrosTest {
         );
     }
 
+    static Stream<Arguments> keyChainArguments() {
+        return Stream.of(
+                // re:factor
+                Arguments.of(Item.of(B_DAWG_KEYCHAIN, 1, 50), Item.of(B_DAWG_KEYCHAIN, 1, 50)),
+                Arguments.of(Item.of(B_DAWG_KEYCHAIN, 0, 50), Item.of(B_DAWG_KEYCHAIN, 0, 50)),
+                Arguments.of(Item.of(B_DAWG_KEYCHAIN, 1, 49), Item.of(B_DAWG_KEYCHAIN, 1, 49)),
+                Arguments.of(Item.of(B_DAWG_KEYCHAIN, 0, 49), Item.of(B_DAWG_KEYCHAIN, 0, 49))
+        );
+    }
+
     @Test
     void foo() {
         Item[] items = new Item[]{new Item("foo", 0, 0)};
@@ -86,6 +96,21 @@ class GildedTrosTest {
     @ParameterizedTest
     @MethodSource("passArguments")
     void backstagePasses_differentArguments_returnExpectedResult(Item input, Item expectedItem) {
+        // given
+        Item[] inputs = new Item[]{input};
+        Item[] expected = new Item[]{expectedItem};
+        GildedTros gildedTros = new GildedTros(inputs);
+
+        // when
+        gildedTros.updateQuality();
+
+        // then
+        assertThat(gildedTros.items).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("keyChainArguments")
+    void keychain_differentArguments_returnExpectedResult(Item input, Item expectedItem) {
         // given
         Item[] inputs = new Item[]{input};
         Item[] expected = new Item[]{expectedItem};
