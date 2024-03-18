@@ -2,7 +2,7 @@ package com.gildedtros;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ItemTest {
 
@@ -12,7 +12,7 @@ class ItemTest {
         Item constructorItem = new Item("A", 1, 2);
 
         // when
-        Item ofItem = Item.of(constructorItem.name, constructorItem.sellIn, constructorItem.quality);
+        Item ofItem = Item.of(constructorItem.getName(), constructorItem.getSellIn(), constructorItem.getQuality());
 
         // then
         assertEquals(ofItem, constructorItem);
