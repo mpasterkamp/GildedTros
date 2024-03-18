@@ -26,6 +26,40 @@ class GildedTrosTest {
         );
     }
 
+    static Stream<Arguments> passArguments() {
+        return Stream.of(
+                // re:factor
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 1, 50), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 0, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 0, 50), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, -1, 0)),
+
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 1, 49), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 0, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 11, 49), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 10, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 10, 49), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 9, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 11, 48), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 10, 49)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 10, 48), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 9, 50)),
+
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 6, 48), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 5, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 5, 48), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 4, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 6, 47), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 5, 49)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 5, 48), Item.of(BACKSTAGE_PASSES_FOR_RE_FACTOR, 4, 50)),
+
+                // HAXX
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 1, 50), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 0, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 0, 50), Item.of(BACKSTAGE_PASSES_FOR_HAXX, -1, 0)),
+
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 1, 49), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 0, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 11, 49), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 10, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 10, 49), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 9, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 11, 48), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 10, 49)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 10, 48), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 9, 50)),
+
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 6, 48), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 5, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 5, 48), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 4, 50)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 6, 47), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 5, 49)),
+                Arguments.of(Item.of(BACKSTAGE_PASSES_FOR_HAXX, 5, 48), Item.of(BACKSTAGE_PASSES_FOR_HAXX, 4, 50))
+        );
+    }
+
     @Test
     void foo() {
         Item[] items = new Item[]{new Item("foo", 0, 0)};
@@ -37,6 +71,21 @@ class GildedTrosTest {
     @ParameterizedTest
     @MethodSource("goodWineArguments")
     void goodWine_differentArguments_returnExpectedResult(Item input, Item expectedItem) {
+        // given
+        Item[] inputs = new Item[]{input};
+        Item[] expected = new Item[]{expectedItem};
+        GildedTros gildedTros = new GildedTros(inputs);
+
+        // when
+        gildedTros.updateQuality();
+
+        // then
+        assertThat(gildedTros.items).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("passArguments")
+    void backstagePasses_differentArguments_returnExpectedResult(Item input, Item expectedItem) {
         // given
         Item[] inputs = new Item[]{input};
         Item[] expected = new Item[]{expectedItem};
