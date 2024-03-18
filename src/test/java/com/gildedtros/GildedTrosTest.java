@@ -16,6 +16,7 @@ class GildedTrosTest {
     private static final String BACKSTAGE_PASSES_FOR_RE_FACTOR = "Backstage passes for Re:Factor";
     private static final String BACKSTAGE_PASSES_FOR_HAXX = "Backstage passes for HAXX";
     private static final String B_DAWG_KEYCHAIN = "B-DAWG Keychain";
+    private static final String OTHER_ITEMS = "Other";
 
     static Stream<Arguments> goodWineArguments() {
         return Stream.of(
@@ -62,11 +63,19 @@ class GildedTrosTest {
 
     static Stream<Arguments> keyChainArguments() {
         return Stream.of(
-                // re:factor
                 Arguments.of(Item.of(B_DAWG_KEYCHAIN, 1, 50), Item.of(B_DAWG_KEYCHAIN, 1, 50)),
                 Arguments.of(Item.of(B_DAWG_KEYCHAIN, 0, 50), Item.of(B_DAWG_KEYCHAIN, 0, 50)),
                 Arguments.of(Item.of(B_DAWG_KEYCHAIN, 1, 49), Item.of(B_DAWG_KEYCHAIN, 1, 49)),
                 Arguments.of(Item.of(B_DAWG_KEYCHAIN, 0, 49), Item.of(B_DAWG_KEYCHAIN, 0, 49))
+        );
+    }
+
+    static Stream<Arguments> otherArguments() {
+        return Stream.of(
+                Arguments.of(Item.of(OTHER_ITEMS, 1, 0), Item.of(OTHER_ITEMS, 0, 0)),
+                Arguments.of(Item.of(OTHER_ITEMS, 1, 1), Item.of(OTHER_ITEMS, 0, 0)),
+                Arguments.of(Item.of(OTHER_ITEMS, 0, 1), Item.of(OTHER_ITEMS, -1, 0)),
+                Arguments.of(Item.of(OTHER_ITEMS, 0, 2), Item.of(OTHER_ITEMS, -1, 0))
         );
     }
 
@@ -111,6 +120,21 @@ class GildedTrosTest {
     @ParameterizedTest
     @MethodSource("keyChainArguments")
     void keychain_differentArguments_returnExpectedResult(Item input, Item expectedItem) {
+        // given
+        Item[] inputs = new Item[]{input};
+        Item[] expected = new Item[]{expectedItem};
+        GildedTros gildedTros = new GildedTros(inputs);
+
+        // when
+        gildedTros.updateQuality();
+
+        // then
+        assertThat(gildedTros.items).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("otherArguments")
+    void otherItems_differentArguments_returnExpectedResult(Item input, Item expectedItem) {
         // given
         Item[] inputs = new Item[]{input};
         Item[] expected = new Item[]{expectedItem};
