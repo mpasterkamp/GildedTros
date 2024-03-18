@@ -1,10 +1,10 @@
 package com.gildedtros;
 
 class GildedTros {
-    public static final String GOOD_WINE = "Good Wine";
-    public static final String BACKSTAGE_PASSES_FOR_RE_FACTOR = "Backstage passes for Re:Factor";
-    public static final String BACKSTAGE_PASSES_FOR_HAXX = "Backstage passes for HAXX";
-    public static final String B_DAWG_KEYCHAIN = "B-DAWG Keychain";
+    private static final String GOOD_WINE = "Good Wine";
+    private static final String BACKSTAGE_PASSES_FOR_RE_FACTOR = "Backstage passes for Re:Factor";
+    private static final String BACKSTAGE_PASSES_FOR_HAXX = "Backstage passes for HAXX";
+    private static final String B_DAWG_KEYCHAIN = "B-DAWG Keychain";
     Item[] items;
 
     public GildedTros(Item[] items) {
